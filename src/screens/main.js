@@ -1,12 +1,22 @@
 import React, {Component, Fragment} from 'react';
-import {SafeAreaView, StatusBar, Text} from 'react-native';
 import {
-  InputItem,
-  Button,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  Alert,
+  Keyboard,
+  ScrollView,
+  View,
+} from 'react-native';
+import {
+  List,
+  Card,
   WingBlank,
   WhiteSpace,
+  SearchBar,
 } from '@ant-design/react-native';
 import ErrorModal from '../components/errorModal';
+import CountryModule from '../modules/country';
 
 export default class Main extends Component {
   constructor() {
@@ -23,11 +33,13 @@ export default class Main extends Component {
     });
 
   onBtnPress = () => {
-    console.log('sini');
+    Keyboard.dismiss();
     this.setState(prevState => ({
       error: !prevState.error,
     }));
   };
+
+  onClear = () => this.setState({country: ''});
 
   render() {
     console.log(this.state, 'this.state');
@@ -35,18 +47,15 @@ export default class Main extends Component {
       <Fragment>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <WingBlank>
-            <InputItem
-              clear
-              value={this.state.country}
-              onChange={this.onCountryChange}
-              placeholder="search country"
-            />
-            <WhiteSpace />
-            <Button type="primary" onPress={this.onBtnPress}>
-              search
-            </Button>
-          </WingBlank>
+          <SearchBar
+            value={this.state.country}
+            placeholder="country name"
+            cancelText="search"
+            onSubmit={value => Alert.alert(value)}
+            onCancel={this.onBtnPress}
+            onChange={this.onCountryChange}
+          />
+          <CountryModule.ListItem />
           <ErrorModal
             visible={this.state.error}
             onClose={this.onBtnPress}

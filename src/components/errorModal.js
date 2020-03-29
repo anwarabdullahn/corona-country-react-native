@@ -6,8 +6,6 @@ const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
   image: {
     width: null,
