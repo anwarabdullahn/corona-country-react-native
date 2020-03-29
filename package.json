@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^2.0.0",
     "@ant-design/react-native": "^3.3.0",
+    "axios": "^0.19.2",
     "react": "16.11.0",
     "react-native": "0.62.0",
     "redux": "^4.0.5",
