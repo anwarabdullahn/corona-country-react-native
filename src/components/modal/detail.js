@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     marginVertical: 10,
     marginHorizontal: 20,
+    borderColor: '#000',
+    borderWidth: 1,
   },
   message: {
     textAlign: 'center',
