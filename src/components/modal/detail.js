@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   message: {
-    textAlign: 'center',
+    marginLeft: 16,
   },
 });
 
@@ -28,14 +28,23 @@ export default function detailModal(props) {
     <Modal popup animationType="slide-up" visible={visible}>
       {item && (
         <View style={styles.container}>
-          <Image style={styles.image} source={{uri: item.countryInfo.flag}} />
+          {item.countryInfo.flag && (
+            <Image
+              style={styles.image}
+              source={
+                item.countryInfo
+                  ? {uri: item.countryInfo.flag, cache: 'only-if-cached'}
+                  : require('../../assets/fight.png')
+              }
+            />
+          )}
           {Object.keys(item).map(
-            e =>
-              typeof item[e] !== 'object' && (
-                <Text style={{marginLeft: 16}}>{`${e.replace(
+            (element, index) =>
+              typeof item[element] !== 'object' && (
+                <Text style={styles.message} key={index}>{`${element.replace(
                   /([a-z](?=[A-Z]))/g,
                   '$1 ',
-                )} : ${item[e]}`}</Text>
+                )} : ${item[element]}`}</Text>
               ),
           )}
         </View>

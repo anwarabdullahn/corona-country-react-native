@@ -25,11 +25,11 @@ class Main extends Component {
   componentDidUpdate() {
     if (this.state.country === '' && this.state.isFiltered) {
       Keyboard.dismiss();
-      this.setState({isFiltered: false});
+      this.setIsFiltered(false);
     }
     if (this.state.country !== '' && !this.state.isFiltered) {
       Keyboard.dismiss();
-      this.setState({isFiltered: true});
+      this.setIsFiltered(true);
     }
     if (
       this.props.filteredCountry.length === 0 &&
@@ -40,6 +40,8 @@ class Main extends Component {
       setTimeout(() => this.setState({error: true}), 3000);
     }
   }
+
+  setIsFiltered = isFiltered => this.setState({isFiltered});
 
   onCountryChange = countryName => {
     this.setState({country: countryName});
