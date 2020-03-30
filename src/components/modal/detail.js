@@ -6,11 +6,14 @@ const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
+    flex: 1,
   },
   image: {
     width: null,
     resizeMode: 'cover',
-    height: height * 0.45,
+    height: height * 0.3,
+    marginVertical: 10,
+    marginHorizontal: 20,
   },
   message: {
     textAlign: 'center',
@@ -23,7 +26,7 @@ export default function detailModal(props) {
     <Modal popup animationType="slide-up" visible={visible}>
       {item && (
         <View style={styles.container}>
-          <Image style={styles.image} source={item.countryInfo.flag} />
+          <Image style={styles.image} source={{uri: item.countryInfo.flag}} />
           {Object.keys(item).map(
             e =>
               typeof item[e] !== 'object' && (
