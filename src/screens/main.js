@@ -107,6 +107,11 @@ class Main extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  getAllCountries,
+  searchCountry,
+};
+
 const mapStateToProps = state => ({
   countries: state.country.countries,
   filteredCountry: state.country.filteredCountry,
@@ -114,5 +119,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {getAllCountries, searchCountry},
+  mapDispatchToProps,
 )(Main);
