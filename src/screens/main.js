@@ -1,48 +1,76 @@
 import React, {Component, Fragment} from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  Alert,
-  Keyboard,
-  ScrollView,
-  View,
-} from 'react-native';
-import {
-  List,
-  Card,
-  WingBlank,
-  WhiteSpace,
-  SearchBar,
-} from '@ant-design/react-native';
-import ErrorModal from '../components/errorModal';
+import {SafeAreaView, StatusBar, Keyboard} from 'react-native';
+import {SearchBar} from '@ant-design/react-native';
+import {connect} from 'react-redux';
+import Modal from '../components/modal';
 import CountryModule from '../modules/country';
+import {getAllCountries, searchCountry} from '../actions/country';
 
-export default class Main extends Component {
+class Main extends Component {
   constructor() {
     super();
     this.state = {
       country: '',
       error: false,
+      showDetail: false,
+      selectedCountry: null,
+      isFiltered: false,
     };
   }
 
-  onCountryChange = country =>
-    this.setState({
-      country,
-    });
+  componentDidMount() {
+    this.props.getAllCountries();
+  }
 
-  onBtnPress = () => {
+  componentDidUpdate() {
+    if (this.state.country === '' && this.state.isFiltered) {
+      Keyboard.dismiss();
+      this.setState({isFiltered: false});
+    }
+    if (this.state.country !== '' && !this.state.isFiltered) {
+      Keyboard.dismiss();
+      this.setState({isFiltered: true});
+    }
+    if (
+      this.props.filteredCountry.length === 0 &&
+      this.state.isFiltered &&
+      !this.state.error
+    ) {
+      Keyboard.dismiss();
+      setTimeout(() => this.setState({error: true}), 3000);
+    }
+  }
+
+  onCountryChange = countryName => {
+    this.setState({country: countryName});
+    if (!this.state.error) {
+      this.props.searchCountry(countryName);
+    }
+  };
+
+  onErrorPress = () => {
     Keyboard.dismiss();
+    this.setState({
+      error: false,
+      country: '',
+      isFiltered: false,
+    });
+  };
+
+  onDetailPress = () => {
     this.setState(prevState => ({
-      error: !prevState.error,
+      showDetail: !prevState.showDetail,
     }));
   };
 
-  onClear = () => this.setState({country: ''});
+  selectItem = selectedCountry => {
+    this.setState({
+      selectedCountry,
+      showDetail: true,
+    });
+  };
 
   render() {
-    console.log(this.state, 'this.state');
     return (
       <Fragment>
         <StatusBar barStyle="dark-content" />
@@ -51,18 +79,38 @@ export default class Main extends Component {
             value={this.state.country}
             placeholder="country name"
             cancelText="search"
-            onSubmit={value => Alert.alert(value)}
-            onCancel={this.onBtnPress}
             onChange={this.onCountryChange}
           />
-          <CountryModule.ListItem />
-          <ErrorModal
+          <CountryModule.ListItem
+            items={
+              !this.state.isFiltered
+                ? this.props.countries
+                : this.props.filteredCountry
+            }
+            selectItem={this.selectItem}
+          />
+          <Modal.Error
             visible={this.state.error}
-            onClose={this.onBtnPress}
+            onClose={this.onErrorPress}
             message={"Sorry, We can't find your country data"}
+          />
+          <Modal.Detail
+            visible={this.state.showDetail}
+            onClose={this.onDetailPress}
+            item={this.state.selectedCountry}
           />
         </SafeAreaView>
       </Fragment>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  countries: state.country.countries,
+  filteredCountry: state.country.filteredCountry,
+});
+
+export default connect(
+  mapStateToProps,
+  {getAllCountries, searchCountry},
+)(Main);

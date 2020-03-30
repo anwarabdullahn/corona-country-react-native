@@ -21,7 +21,10 @@ export default function errorModal(props) {
   return (
     <Modal popup animationType="slide-up" visible={props.visible}>
       <View style={styles.container}>
-        <Image style={styles.image} source={require('../assets/fight.png')} />
+        <Image
+          style={styles.image}
+          source={require('../../assets/fight.png')}
+        />
         <Text style={styles.message}>{props.message}</Text>
       </View>
       <Button type="warning" onPress={props.onClose}>

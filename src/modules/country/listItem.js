@@ -1,41 +1,32 @@
 import React from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
-import {List, Card} from '@ant-design/react-native';
+import {ScrollView, FlatList, ActivityIndicator, View} from 'react-native';
+import {List} from '@ant-design/react-native';
+import Card from '../../components/card';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-  },
-});
-
-export default function listItem() {
+export default function listItem(props) {
   return (
-    <ScrollView
-      automaticallyAdjustContentInsets={false}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}>
-      <List renderHeader={'Latest'}>
-        <View style={styles.container}>
-          <Card>
-            <Card.Header
-              title="This is title"
-              thumbStyle={{width: 30, height: 30}}
-              thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-              extra="this is extra"
-            />
-            <Card.Body>
-              <View style={{height: 42}}>
-                <Text style={{marginLeft: 16}}>Card Content</Text>
-              </View>
-            </Card.Body>
-            <Card.Footer
-              content="footer content"
-              extra="footer extra content"
-            />
-          </Card>
-        </View>
-      </List>
-    </ScrollView>
+    <List renderHeader={'Latest'}>
+      <ScrollView
+        automaticallyAdjustContentInsets={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
+        {props.items.length > 0 ? (
+          <FlatList
+            data={props.items}
+            renderItem={({item}) => (
+              <Card item={item} selectItem={props.selectItem} />
+            )}
+            keyExtractor={item => item.countryInfo._id}
+          />
+        ) : (
+          <View
+            style={{
+              paddingVertical: 30,
+            }}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+      </ScrollView>
+    </List>
   );
 }

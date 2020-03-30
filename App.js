@@ -1,12 +1,16 @@
 import React from 'react';
-import {Provider as Layer} from '@ant-design/react-native';
 import Main from './src/screens/main';
+import {Provider} from 'react-redux';
+import {Provider as Layer} from '@ant-design/react-native';
+import store from './src/store';
 
 const App = () => {
   return (
-    <Layer>
-      <Main />
-    </Layer>
+    <Provider store={store}>
+      <Layer>
+        <Main />
+      </Layer>
+    </Provider>
   );
 };
 
