@@ -4,7 +4,7 @@ import {SearchBar} from '@ant-design/react-native';
 import {connect} from 'react-redux';
 import Modal from '../components/modal';
 import CountryModule from '../modules/country';
-import {getAllCountries, searchCountry} from '../actions/country';
+import {getAllCountries, searchCountry} from '../redux/country/action';
 
 class Main extends Component {
   constructor() {

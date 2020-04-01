@@ -3,8 +3,8 @@ import {
   TYPE,
   getAllCountriesSuccess,
   getSearchCountriesSuccess,
-} from '../actions/country';
-import * as api from '../api/country';
+} from './action';
+import * as api from '../../services/country';
 
 function* watchGetAllCountriesRequest() {
   yield takeLatest(TYPE.GET_ALL_COUNTRY_REQUEST, getAllCountries);

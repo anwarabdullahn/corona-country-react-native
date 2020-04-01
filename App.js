@@ -2,7 +2,7 @@ import React from 'react';
 import Main from './src/screens/main';
 import {Provider} from 'react-redux';
 import {Provider as Layer} from '@ant-design/react-native';
-import store from './src/store';
+import store from './src/redux/store';
 
 const App = () => {
   return (

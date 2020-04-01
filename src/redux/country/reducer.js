@@ -1,4 +1,4 @@
-import {TYPE} from '../actions/country';
+import {TYPE} from './action';
 
 const initialState = {
   countries: [],
