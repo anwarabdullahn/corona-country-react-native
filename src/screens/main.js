@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from 'react';
-import {SafeAreaView, StatusBar, Keyboard} from 'react-native';
-import {SearchBar} from '@ant-design/react-native';
-import {connect} from 'react-redux';
+import React, { Component, Fragment } from 'react';
+import { SafeAreaView, StatusBar, Keyboard } from 'react-native';
+import { SearchBar } from '@ant-design/react-native';
+import { connect } from 'react-redux';
 import Modal from '../components/modal';
 import CountryModule from '../modules/country';
-import {getAllCountries, searchCountry} from '../redux/country/action';
+import { getAllCountries, searchCountry } from '../redux/country/action';
 
 class Main extends Component {
   constructor() {
@@ -24,11 +24,11 @@ class Main extends Component {
 
   componentDidUpdate() {
     if (this.state.country === '' && this.state.isFiltered) {
-      Keyboard.dismiss();
+      this.closeKeyboard(4000);
       this.setIsFiltered(false);
     }
     if (this.state.country !== '' && !this.state.isFiltered) {
-      Keyboard.dismiss();
+      this.closeKeyboard(4000);
       this.setIsFiltered(true);
     }
     if (
@@ -37,14 +37,19 @@ class Main extends Component {
       !this.state.error
     ) {
       Keyboard.dismiss();
-      setTimeout(() => this.setState({error: true}), 3000);
+      setTimeout(() => this.setState({ error: true }), 3000);
     }
   }
 
-  setIsFiltered = isFiltered => this.setState({isFiltered});
+  closeKeyboard = (timeOut) => {
+    setTimeout(() =>
+      Keyboard.dismiss(), timeOut)
+  }
+
+  setIsFiltered = isFiltered => this.setState({ isFiltered });
 
   onCountryChange = countryName => {
-    this.setState({country: countryName});
+    this.setState({ country: countryName });
     if (!this.state.error) {
       this.props.searchCountry(countryName);
     }
