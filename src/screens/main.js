@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { SafeAreaView, StatusBar, Keyboard } from 'react-native';
+import { SafeAreaView, StatusBar, Keyboard, View } from 'react-native';
 import { SearchBar } from '@ant-design/react-native';
 import { connect } from 'react-redux';
 import Modal from '../components/modal';
@@ -79,7 +79,7 @@ class Main extends Component {
 
   render() {
     return (
-      <Fragment>
+      <View style={{ flex: 1 }}>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <SearchBar
@@ -107,7 +107,7 @@ class Main extends Component {
             item={this.state.selectedCountry}
           />
         </SafeAreaView>
-      </Fragment>
+      </View>
     );
   }
 }

@@ -1,15 +1,16 @@
 import React from 'react';
-import {FlatList, ActivityIndicator} from 'react-native';
-import {List} from '@ant-design/react-native';
+import { FlatList, ActivityIndicator, View } from 'react-native'
+import { List } from '@ant-design/react-native';
 import Card from '../../components/card';
 
 export default function listItem(props) {
   return (
-    <List renderHeader={'Latest'}>
+    <View>
       {props.items.length > 0 ? (
         <FlatList
+          contentContainerStyle={{ paddingBottom: 100 }}
           data={props.items}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <List.Item onPress={() => props.selectItem(item)}>
               <Card item={item} />
             </List.Item>
@@ -17,13 +18,13 @@ export default function listItem(props) {
           keyExtractor={(item, i) => `${item.countryInfo._id}${i}`}
         />
       ) : (
-        <ActivityIndicator
-          style={{
-            paddingVertical: 30,
-          }}
-          size="large"
-        />
-      )}
-    </List>
+          <ActivityIndicator
+            style={{
+              paddingVertical: 30,
+            }}
+            size="large"
+          />
+        )}
+    </View>
   );
 }
